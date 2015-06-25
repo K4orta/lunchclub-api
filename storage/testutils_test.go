@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"os"
 	"strings"
 	"testing"
 )
@@ -20,7 +21,7 @@ var lcSchema = Schema{
 		fbid text NOT NULL,
 		first_name text NOT NULL, 
 		last_name text NOT NULL,
-		permissions text[],
+		roles text[],
 		added timestamp default now()
 	);
 	`,
@@ -32,7 +33,8 @@ var lcSchema = Schema{
 var pgdb *sqlx.DB
 
 func init() {
-	db, err := CreateConnection("lunchclub_test")
+	connectionDSN = os.Getenv("LCAPI_TEST_POSTGRES_DSN")
+	db, err := CreateConnection()
 	if err != nil {
 		fmt.Printf("Error connecting to test DB:\n %v\n", err)
 	}

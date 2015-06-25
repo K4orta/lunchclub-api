@@ -6,8 +6,10 @@ import (
 	"os"
 )
 
-func CreateConnection(dbName string) (*sqlx.DB, error) {
-	db, err := sqlx.Connect("postgres", "user=ewong password="+os.Getenv("PSPASS")+" dbname="+dbName+" sslmode=disable")
+var connectionDSN string = os.Getenv("LCAPI_POSTGRES_DSN")
+
+func CreateConnection() (*sqlx.DB, error) {
+	db, err := sqlx.Connect("postgres", connectionDSN)
 
 	if err != nil {
 		return nil, err

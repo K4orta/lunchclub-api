@@ -5,7 +5,7 @@ import (
 )
 
 func TestCreateConnection(t *testing.T) {
-	db, err := CreateConnection("lunchclub_test")
+	db, err := CreateConnection()
 	if err != nil {
 		t.Error(err)
 	}
