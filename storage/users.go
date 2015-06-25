@@ -2,15 +2,19 @@
 package storage
 
 import (
-	"fmt"
 	"github.com/jmoiron/sqlx"
-	"github.com/k4orta/lunchclub-api/club"
+	"github.com/k4orta/lunchclub-api/models"
 )
 
-func InsertUser(c *sqlx.DB, user *club.User) {
+func InsertUser(db *sqlx.DB, user *models.User) error {
+	_, err := db.NamedExec(db.Rebind(`INSERT INTO users (fbid, first_name, last_name, permissions) VALUES (:fbid, :first_name, :last_name, :permissions)`), user)
+	if err != nil {
+		return err
+	}
 
+	return nil
 }
 
-func GetUser(c *sqlx.DB, user *club.User) {
-
+func GetUser(c *sqlx.DB, user *models.User) error {
+	return nil
 }

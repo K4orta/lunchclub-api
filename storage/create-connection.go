@@ -6,10 +6,12 @@ import (
 	"os"
 )
 
-func CreateConnection() (*sqlx.DB, error) {
-	c, err := sqlx.Connect("postgres", "user=ewong password="+os.Getenv("PSPASS")+" dbname=lunchclub sslmode=disable")
+func CreateConnection(dbName string) (*sqlx.DB, error) {
+	db, err := sqlx.Connect("postgres", "user=ewong password="+os.Getenv("PSPASS")+" dbname="+dbName+" sslmode=disable")
+
 	if err != nil {
 		return nil, err
 	}
-	return c, nil
+
+	return db, nil
 }
