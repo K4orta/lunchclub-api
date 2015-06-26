@@ -43,7 +43,7 @@ func TestReadUser(t *testing.T) {
 
 		u, _ := GetUserById(db, 1)
 
-		if u.FirstName != "Andrew" {
+		if u.FirstName != "Andrew" || u.LastName != "Tio" {
 			t.Error("Did not fetch user correctly")
 		}
 

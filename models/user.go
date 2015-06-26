@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-type RoleList []string
+type UserId int
 
 type User struct {
-	Id        int              `json:"id" db:"id"`
+	Id        UserId           `json:"id" db:"id"`
 	FbId      string           `json:"fbId" db:"fbid"`
 	FirstName string           `json:"firstName" db:"first_name"`
 	LastName  string           `json:"lastName" db:"last_name"`
