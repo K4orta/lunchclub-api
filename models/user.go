@@ -1,15 +1,16 @@
 package models
 
 import (
-	"github.com/k4orta/lunchclub-api/storage/types"
 	"time"
+
+	"github.com/k4orta/lunchclub-api/storage/types"
 )
 
-type UserId int
+type UserID int
 
 type User struct {
-	Id        UserId           `json:"id" db:"id"`
-	FbId      string           `json:"fbId" db:"fbid"`
+	ID        UserID           `json:"id" db:"id"`
+	FbID      string           `json:"fbId" db:"fbid"`
 	FirstName string           `json:"firstName" db:"first_name"`
 	LastName  string           `json:"lastName" db:"last_name"`
 	Roles     types.StringList `json:"roles" db:"roles"`

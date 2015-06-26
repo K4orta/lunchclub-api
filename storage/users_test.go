@@ -11,8 +11,8 @@ import (
 func TestInsertUser(t *testing.T) {
 	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		var user = models.User{
-			Id:        0,
-			FbId:      "abc",
+			ID:        0,
+			FbID:      "abc",
 			LastName:  "Wong",
 			FirstName: "Erik",
 			Roles:     types.StringList{"admin", "mod"},
@@ -35,8 +35,8 @@ func TestInsertUser(t *testing.T) {
 func TestReadUser(t *testing.T) {
 	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		InsertUser(db, &models.User{
-			Id:        1,
-			FbId:      "abc",
+			ID:        1,
+			FbID:      "abc",
 			LastName:  "Tio",
 			FirstName: "Andrew",
 			Roles:     types.StringList{},
