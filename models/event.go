@@ -1,18 +1,21 @@
 package models
 
 import (
-	"github.com/k4orta/lunchclub-api/storage/types"
 	"time"
+
+	"github.com/k4orta/lunchclub-api/storage/types"
 )
 
-type EventId int
+// EventID is a unique identifier
+type EventID int
 
+//Event is model which tracks the what, when and who
 type Event struct {
-	Id          EventId
+	ID          EventID `json:"id" db:"id"`
 	Title       string
 	Slug        string
 	StartTime   time.Time
 	EndTime     time.Time
-	OrangizerId UserId
-	Rsvps       storage.IntList
+	OrangizerID UserId
+	Rsvps       types.IntList
 }

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type StringList []string
+type IntList []string
 
 func (p IntList) Value() (driver.Value, error) {
 	if len(p) == 0 {

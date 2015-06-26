@@ -1,10 +1,11 @@
 package storage
 
 import (
+	"testing"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/k4orta/lunchclub-api/models"
 	"github.com/k4orta/lunchclub-api/storage/types"
-	"testing"
 )
 
 func TestInsertUser(t *testing.T) {
@@ -41,7 +42,7 @@ func TestReadUser(t *testing.T) {
 			Roles:     types.StringList{},
 		})
 
-		u, _ := GetUserById(db, 1)
+		u, _ := GetUserByID(db, 1)
 
 		if u.FirstName != "Andrew" || u.LastName != "Tio" {
 			t.Error("Did not fetch user correctly")

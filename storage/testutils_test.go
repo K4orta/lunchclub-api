@@ -2,11 +2,12 @@ package storage
 
 import (
 	"fmt"
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 type Schema struct {
@@ -19,7 +20,7 @@ var lcSchema = Schema{
 	CREATE TABLE users (
 		id SERIAL PRIMARY KEY,
 		fbid text NOT NULL,
-		first_name text NOT NULL, 
+		first_name text NOT NULL,
 		last_name text NOT NULL,
 		roles text[],
 		added timestamp default now()
