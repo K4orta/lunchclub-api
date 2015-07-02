@@ -25,9 +25,18 @@ var lcSchema = Schema{
 		roles text[],
 		added timestamp default now()
 	);
+	CREATE TABLE events (
+		id SERIAL PRIMARY KEY,
+		fbid text NOT NULL,
+		first_name text NOT NULL,
+		last_name text NOT NULL,
+		roles text[],
+		added timestamp default now()
+	);
 	`,
 	drop: `
 	DROP TABLE users;
+	DROP TABLE events;
 	`,
 }
 
