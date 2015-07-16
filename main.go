@@ -14,8 +14,8 @@ func main() {
 	// router.HandleFunc("/users", api.UpdateUser).Methods("PUT")
 	// router.HandleFunc("/users", api.DeleteUser).Methods("DELETE")
 	router.HandleFunc("/login", api.RedirectFBLogin)
+	router.HandleFunc("/auth/current", api.ConfirmSession)
 	router.HandleFunc("/auth", api.GetFBToken)
-	router.HandleFunc("/confirm", api.ConfirmSession)
 
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},

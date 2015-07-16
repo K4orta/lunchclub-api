@@ -21,6 +21,7 @@ var conf = &oauth2.Config{
 	ClientSecret: fbClientSecret,
 	Scopes:       []string{"public_profile", "email"},
 	Endpoint:     facebook.Endpoint,
+	RedirectURL:  "http://localhost:3000/api/auth",
 }
 
 // AccessToken is a stuct that holds a token value and an extires time.
@@ -29,26 +30,26 @@ type AccessToken struct {
 	Expires int64
 }
 
+type fbUser struct {
+	ID    string
+	Email string
+	Name  string
+}
+
 // GetFBToken is a function that exchanges a code for an access token.
 func GetFBToken(w http.ResponseWriter, req *http.Request) {
 	q := req.URL.Query()
 	tok, err := conf.Exchange(oauth2.NoContext, q.Get("code"))
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprint(w, err)
+		return
 	}
-	resp, err := http.Get("https://graph.facebook.com/me?access_token=" + tok.AccessToken)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer resp.Body.Close()
-	respBody, err := ioutil.ReadAll(resp.Body)
 
 	session, _ := store.Get(req, "lc-session")
-	session.Values["uname"] = "Adam"
-	session.Values["pw"] = "1234"
+	session.Values["token"] = tok.AccessToken
 	session.Save(req, w)
 
-	fmt.Fprint(w, string(respBody))
+	http.Redirect(w, req, "http://localhost:3000/", http.StatusTemporaryRedirect)
 }
 
 // RedirectFBLogin forwards the user to the Facebook login page.
@@ -59,7 +60,20 @@ func RedirectFBLogin(w http.ResponseWriter, req *http.Request) {
 // ConfirmSession forwards the user to the Facebook login page.
 func ConfirmSession(w http.ResponseWriter, req *http.Request) {
 	session, _ := store.Get(req, "lc-session")
-	fmt.Fprint(w, session.Values["uname"])
+	if session.Values["token"] == nil {
+		fmt.Fprint(w, "{}")
+		return
+	}
+	tok := session.Values["token"].(string)
+
+	resp, err := http.Get("https://graph.facebook.com/me?access_token=" + tok)
+	defer resp.Body.Close()
+	if err != nil {
+		fmt.Fprint(w, err)
+		return
+	}
+	respBody, err := ioutil.ReadAll(resp.Body)
+	fmt.Fprint(w, string(respBody))
 }
 
 // FBLoginURL returns a URL for the FB login promt.
