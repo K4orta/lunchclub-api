@@ -27,16 +27,26 @@ var lcSchema = Schema{
 	);
 	CREATE TABLE events (
 		id SERIAL PRIMARY KEY,
-		fbid text NOT NULL,
-		first_name text NOT NULL,
-		last_name text NOT NULL,
-		roles text[],
-		added timestamp default now()
+		title text NOT NULL,
+		slug text NOT NULL,
+		start_time timestamp default now(),
+		end_time timestamp default now(),
+		organizer_id int,
+		location_id int,
+		rsvps int[]
+	);
+	CREATE TABLE locations (
+		id SERIAL PRIMARY KEY,
+		name text NOT NULL,
+		slug text NOT NULL,
+		address text NOT NULL,
+		lat_lng double precision[]
 	);
 	`,
 	drop: `
 	DROP TABLE users;
 	DROP TABLE events;
+	DROP TABLE locations;
 	`,
 }
 

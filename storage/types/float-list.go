@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type FloatList []string
+type FloatList []float64
 
 func (p FloatList) Value() (driver.Value, error) {
 	if len(p) == 0 {

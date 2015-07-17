@@ -6,10 +6,11 @@ import (
 
 type LocationID int
 
+// Location describes a lunch spot
 type Location struct {
 	ID      LocationID      `json:"id" db:"id"`
-	LatLng  types.FloatList `json:"latlng" db:"latLng"`
 	Name    string          `json:"name" db:"name"`
+	Slug    string          `json:"slug" db:"slug"`
 	Address string          `json:"address" db:"address"`
-	URL     string          `json:"url" db:"url"`
+	LatLng  types.FloatList `json:"latLng" db:"lat_lng"`
 }

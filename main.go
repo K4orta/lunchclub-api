@@ -11,6 +11,8 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/users", api.CreateUser).Methods("POST")
 	router.HandleFunc("/users", api.ReadUsers)
+
+	router.HandleFunc("/events", api.CreateEvent).Methods("POST")
 	// router.HandleFunc("/users", api.UpdateUser).Methods("PUT")
 	// router.HandleFunc("/users", api.DeleteUser).Methods("DELETE")
 	router.HandleFunc("/login", api.RedirectFBLogin)
