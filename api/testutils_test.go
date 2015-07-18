@@ -12,3 +12,7 @@ func makeFakeServer(resp string) *httptest.Server {
 		fmt.Fprint(w, resp)
 	}))
 }
+
+func mockAPI(handler func(http.ResponseWriter, *http.Request)) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(handler))
+}

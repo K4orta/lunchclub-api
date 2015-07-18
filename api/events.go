@@ -32,3 +32,7 @@ func CreateEvent(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, string(b))
 	// loc, err := storage.GetLocationBySlug(db, "")
 }
+
+func HelloWorld(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "Hello World")
+}
