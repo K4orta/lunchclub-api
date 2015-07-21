@@ -10,7 +10,7 @@ import (
 )
 
 func TestInsertEvent(t *testing.T) {
-	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		var event = models.Event{
 			ID:          0,
 			Title:       "Lunch Club Presents: Pizza Hut",

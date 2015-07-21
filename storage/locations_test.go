@@ -9,7 +9,7 @@ import (
 )
 
 func TestInsertLocation(t *testing.T) {
-	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		var location = models.Location{
 			ID:      0,
 			Name:    "Pizza Hut",
@@ -31,7 +31,7 @@ func TestInsertLocation(t *testing.T) {
 }
 
 func TestGetLocationBySlug(t *testing.T) {
-	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		var location = models.Location{
 			ID:      0,
 			Name:    "Pizza Hut",

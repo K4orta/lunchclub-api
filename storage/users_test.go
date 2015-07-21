@@ -9,7 +9,7 @@ import (
 )
 
 func TestInsertUser(t *testing.T) {
-	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		var user = models.User{
 			ID:        0,
 			FbID:      "abc",
@@ -33,7 +33,7 @@ func TestInsertUser(t *testing.T) {
 }
 
 func TestReadUser(t *testing.T) {
-	runStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
 		InsertUser(db, &models.User{
 			ID:        1,
 			FbID:      "abc",

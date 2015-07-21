@@ -3,7 +3,6 @@ package storage
 import (
 	"fmt"
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/jmoiron/sqlx"
@@ -53,7 +52,7 @@ var lcSchema = Schema{
 var pgdb *sqlx.DB
 
 func init() {
-	connectionDSN = os.Getenv("LCAPI_TEST_POSTGRES_DSN")
+	SetDSN(os.Getenv("LCAPI_TEST_POSTGRES_DSN"))
 	db, err := CreateConnection()
 	if err != nil {
 		fmt.Printf("Error connecting to test DB:\n %v\n", err)
@@ -65,20 +64,8 @@ func (s Schema) Postgres() (string, string) {
 	return s.create, s.drop
 }
 
-func MultiExec(e sqlx.Execer, query string) {
-	stmts := strings.Split(query, ";\n")
-	if len(strings.Trim(stmts[len(stmts)-1], " \n\t\r")) == 0 {
-		stmts = stmts[:len(stmts)-1]
-	}
-	for _, s := range stmts {
-		_, err := e.Exec(s)
-		if err != nil {
-			fmt.Println(err, s)
-		}
-	}
-}
-
-func runStorageTest(t *testing.T, test func(db *sqlx.DB, t *testing.T)) {
+// Utility for running a test with a temporary schema
+func RunStorageTest(t *testing.T, test func(db *sqlx.DB, t *testing.T)) {
 	runner := func(db *sqlx.DB, t *testing.T, create, drop string) {
 		defer func() {
 			MultiExec(db, drop)
