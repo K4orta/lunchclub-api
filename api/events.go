@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/k4orta/lunchclub-api/storage"
+	"github.com/k4orta/lunchclub-api/yelp"
 )
 
 type eventForm struct {
@@ -27,12 +30,12 @@ func CreateEvent(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, err)
 		return
 	}
-	// db, _ := storage.CreateConnection()
-	// defer db.Close()
-	fmt.Fprint(w, string(b))
-	// loc, err := storage.GetLocationBySlug(db, "")
-}
+	db, _ := storage.CreateConnection()
+	defer db.Close()
 
-func HelloWorld(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Hello World")
+	loc, err := storage.GetLocationBySlug(db, yelp.ParseURL(ef.YelpURL))
+	if loc == nil {
+
+	}
+	fmt.Fprint(w, string(b))
 }
