@@ -1,5 +1,26 @@
 package yelp
 
+import (
+	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+)
+
+func TestFetchBusiness(t *testing.T) {
+	fs := makeFakeServer(stubBusinessResponse())
+	businessEndpoint = fs.URL + "/"
+
+	b, err := FetchBusiness("kona-club-oakland")
+	if err != nil {
+		t.Error(err)
+	}
+
+	if b.Slug != "kona-club-oakland" {
+		t.Error("expected business slug to equal 'kona-club-oakland', got %v", b.Slug)
+	}
+}
+
 func stubBusinessResponse() string {
 	return `{
     "is_claimed": true,
@@ -65,4 +86,11 @@ func stubBusinessResponse() string {
         "state_code": "CA"
     }
   }`
+}
+
+func makeFakeServer(resp string) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, resp)
+	}))
 }
