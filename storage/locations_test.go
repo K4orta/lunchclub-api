@@ -17,12 +17,16 @@ func TestInsertLocation(t *testing.T) {
 			Address: "123 4th Street",
 			LatLng:  types.FloatList{0, 2},
 		}
-		err := InsertLocation(db, &location)
+		_, err := InsertLocation(db, &location)
 		if err != nil {
 			t.Error(err)
 		}
 		loc := models.Location{}
 		db.Get(&loc, db.Rebind(`SELECT * FROM locations LIMIT 1`))
+
+		if loc.ID != 1 {
+			t.Error("InsertLocation did not set an ID")
+		}
 
 		if loc.Name != "Pizza Hut" {
 			t.Error("Did not insert Location Name correctly")

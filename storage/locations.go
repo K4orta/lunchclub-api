@@ -7,13 +7,20 @@ import (
 	"github.com/k4orta/lunchclub-api/models"
 )
 
-func InsertLocation(db *sqlx.DB, location *models.Location) error {
-	_, err := db.NamedExec(db.Rebind(`INSERT INTO locations (name, slug, address, lat_lng) VALUES (:name, :slug, :address, :lat_lng)`), location)
+func InsertLocation(db *sqlx.DB, location *models.Location) (*models.Location, error) {
+	rows, err := db.NamedQuery(db.Rebind(`
+		INSERT INTO locations (name, slug, address, lat_lng)
+		VALUES (:name, :slug, :address, :lat_lng)
+	`), location)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if rows.Next() {
+		rows.Scan(&location.ID)
+	}
+
+	return location, nil
 }
 
 // GetLocationBySlug Looks up a location by its Yelp ID

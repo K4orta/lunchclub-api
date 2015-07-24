@@ -6,11 +6,18 @@ import (
 )
 
 // InsertEvent takes a DB connect and inserts a new EventEntry
-func InsertEvent(db *sqlx.DB, user *models.Event) error {
-	_, err := db.NamedExec(db.Rebind(`INSERT INTO events (title, slug, start_time, end_time, organizer_id, location_id, rsvps) VALUES (:title, :slug, :start_time, :end_time, :organizer_id, :location_id, :rsvps)`), user)
+func InsertEvent(db *sqlx.DB, event *models.Event) (*models.Event, error) {
+	rows, err := db.NamedQuery(db.Rebind(`
+		INSERT INTO events (title, slug, start_time, end_time, organizer_id, location_id, rsvps)
+		VALUES (:title, :slug, :start_time, :end_time, :organizer_id, :location_id, :rsvps)
+		RETURNING id`), event)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	if rows.Next() {
+		rows.Scan(&event.ID)
+	}
+
+	return event, nil
 }

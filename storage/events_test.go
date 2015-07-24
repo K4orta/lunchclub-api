@@ -21,12 +21,16 @@ func TestInsertEvent(t *testing.T) {
 			LocationID:  0,
 			RSVPs:       types.IntList{0, 2},
 		}
-		err := InsertEvent(db, &event)
+		_, err := InsertEvent(db, &event)
 		if err != nil {
 			t.Error(err)
 		}
 		ev := models.Event{}
 		db.Get(&ev, db.Rebind(`SELECT * FROM events LIMIT 1`))
+
+		if ev.ID != 1 {
+			t.Error("Did not give event an ID after creation")
+		}
 
 		if ev.Title != "Lunch Club Presents: Pizza Hut" {
 			t.Error("Did not insert Event Title correctly")
