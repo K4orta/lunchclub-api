@@ -55,3 +55,13 @@ func TestGetLocationBySlug(t *testing.T) {
 		}
 	})
 }
+
+func TestEmptyGetLocationBySlug(t *testing.T) {
+	RunStorageTest(t, func(db *sqlx.DB, t *testing.T) {
+		loc, err := GetLocationBySlug(db, "pizza-hut")
+
+		if err == nil {
+			t.Errorf("Expected loc to be nil, got:  %v", loc)
+		}
+	})
+}

@@ -15,7 +15,7 @@ func TestCreateEvent(t *testing.T) {
 		fs := mockAPI(CreateEvent)
 		resp, _ := http.Post(fs.URL, "application/json", bytes.NewBuffer([]byte(`
 			{
-				"yelpURL": "http://www.yelp.com/biz/20-spot-san-francisco"
+				"yelpURL": "http://www.yelp.com/biz/20-spot-san-francisco",
 				"startTime": ""
 			}
 		`)))
