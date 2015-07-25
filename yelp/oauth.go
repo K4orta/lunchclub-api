@@ -18,9 +18,9 @@ var oauthClient client
 
 func init() {
 	oauthClient.client.Credentials.Token = os.Getenv("LCAPI_YELP_KEY")
-	oauthClient.client.Credentials.Token = os.Getenv("LCAPI_YELP_SECRET")
-	oauthClient.client.Credentials.Token = os.Getenv("LCAPI_YELP_TOKEN")
-	oauthClient.client.Credentials.Token = os.Getenv("LCAPI_YELP_TOKEN_SECRET")
+	oauthClient.client.Credentials.Secret = os.Getenv("LCAPI_YELP_SECRET")
+	oauthClient.token.Token = os.Getenv("LCAPI_YELP_TOKEN")
+	oauthClient.token.Secret = os.Getenv("LCAPI_YELP_TOKEN_SECRET")
 }
 
 func (c *client) get(url string, params url.Values, v interface{}) error {

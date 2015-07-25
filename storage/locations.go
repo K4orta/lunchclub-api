@@ -10,6 +10,7 @@ func InsertLocation(db *sqlx.DB, location *models.Location) (*models.Location, e
 	rows, err := db.NamedQuery(db.Rebind(`
 		INSERT INTO locations (name, slug, address, lat_lng)
 		VALUES (:name, :slug, :address, :lat_lng)
+		RETURNING id
 	`), location)
 	if err != nil {
 		return nil, err

@@ -1,6 +1,7 @@
 package yelp
 
 import (
+	"fmt"
 	"net/url"
 
 	"github.com/k4orta/lunchclub-api/models"
@@ -13,19 +14,24 @@ var businessEndpoint = "http://api.yelp.com/v2/business/"
 func FetchBusiness(id string) (*models.Location, error) {
 	var ret struct {
 		ID       string
+		Name     string
 		Location struct {
+			Address    []string
 			Coordinate struct {
 				Latitude  float64
 				Longitude float64
 			}
 		}
 	}
+	fmt.Println(businessEndpoint + id)
 	err := oauthClient.get(businessEndpoint+id, url.Values{}, &ret)
 	if err != nil {
 		return nil, err
 	}
 	m := models.Location{
-		Slug: ret.ID,
+		Slug:    ret.ID,
+		Name:    ret.Name,
+		Address: ret.Location.Address[0],
 		LatLng: types.FloatList{
 			ret.Location.Coordinate.Latitude,
 			ret.Location.Coordinate.Longitude,
